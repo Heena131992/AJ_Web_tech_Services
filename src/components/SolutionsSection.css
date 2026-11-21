@@ -1,0 +1,209 @@
+.solutions-sec {
+  background-color: var(--bg-white);
+  padding: 64px 20px;
+}
+
+.solutions-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.solutions-head {
+  text-align: center;
+  max-width: 740px;
+  margin: 0 auto 40px;
+}
+
+/* Same bottom-to-top scroll translate as ProcessStepsSection */
+.scroll-rise {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+}
+
+.scroll-rise.is-shown {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.solutions-kicker {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+
+.solutions-title {
+  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+  font-weight: 800;
+  color: var(--ink-dark);
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.solutions-para {
+  font-size: 0.95rem;
+  color: var(--ink-body);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.sol-card {
+  position: relative;
+  background-color: var(--bg-white);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* Smooth opacity fade layer on hover */
+.sol-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #f97316 0%, #db2777 55%, #7c3aed 100%);
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.sol-card:hover {
+  transform: translateY(-5px);
+  border-color: transparent;
+  box-shadow: 0 18px 34px rgba(219, 39, 119, 0.2);
+}
+
+.sol-card:hover::before {
+  opacity: 1;
+}
+
+.sol-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sol-icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sol-card:hover .sol-icon-box {
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.sol-icon-blue {
+  background-color: #eff6ff;
+  color: var(--blue-deep);
+}
+
+.sol-icon-purple {
+  background-color: #f5f3ff;
+  color: var(--purple);
+}
+
+.sol-icon-teal {
+  background-color: #ecfeff;
+  color: #0e7490;
+}
+
+.sol-icon-indigo {
+  background-color: #eef2ff;
+  color: #4338ca;
+}
+
+.sol-card h3 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--ink-dark);
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.sol-card p {
+  font-size: 0.88rem;
+  color: var(--ink-body);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.sol-card:hover h3,
+.sol-card:hover p {
+  color: #ffffff;
+}
+
+.sol-card:hover p {
+  opacity: 0.96;
+}
+
+.sol-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-dark);
+  transition: color 0.3s ease;
+}
+
+.sol-card:hover .sol-link {
+  color: #ffffff;
+}
+
+.sol-link span {
+  display: inline-block;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sol-card:hover .sol-link span {
+  transform: translateX(5px);
+}
+
+@media (max-width: 1024px) {
+  .solutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .solutions-grid {
+    grid-template-columns: 1fr;
+  }
+}
