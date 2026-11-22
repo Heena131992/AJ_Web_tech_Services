@@ -97,7 +97,7 @@ export default function FooterSection() {
             <ul className="footer-contact-list">
               <li className="footer-contact-item">
                 <span className="footer-c-icon icon-phone" aria-hidden="true">📞</span>
-                <a href="tel:+919876543210">+91 98765 43210</a>
+                <a href="tel:+919876543210">+91 87001 23076</a>
               </li>
               <li className="footer-contact-item">
                 <span className="footer-c-icon icon-mail" aria-hidden="true">✉️</span>

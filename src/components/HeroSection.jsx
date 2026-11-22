@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./HeroSection.css";
 
 const SERVICE_OPTIONS = [
@@ -8,6 +8,10 @@ const SERVICE_OPTIONS = [
   "SEO & Digital Marketing",
 ];
 
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://api-backend.infoheena13.workers.dev";
+
 export default function HeroSection({ selectedService }) {
   const [formData, setFormData] = useState({
     company: "",
@@ -15,17 +19,65 @@ export default function HeroSection({ selectedService }) {
     email: "",
     service: selectedService || SERVICE_OPTIONS[0],
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [statusMsg, setStatusMsg] = useState("");
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (selectedService) {
+      setFormData((prev) => ({ ...prev, service: selectedService }));
+    }
+  }, [selectedService]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setSubmitted(false);
+    setStatusMsg("");
+    setIsError(false);
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setStatusMsg("");
+    setIsError(false);
+
+    try {
+      const response = await fetch(`${API_BASE}/api/callback`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          company: formData.company.trim(),
+          phone: formData.phone.trim(),
+          email: formData.email.trim(),
+          service: formData.service,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Request submit nahi ho payi.");
+      }
+
+      setIsError(false);
+      setStatusMsg(
+        result.message || "Request received. Our team will reach out shortly."
+      );
+      setFormData((prev) => ({
+        ...prev,
+        company: "",
+        phone: "",
+        email: "",
+      }));
+    } catch (err) {
+      setIsError(true);
+      setStatusMsg(err.message || "Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -116,7 +168,7 @@ export default function HeroSection({ selectedService }) {
                 type="tel"
                 required
                 className="field-control"
-                placeholder="+91 98765 43210"
+                placeholder="+91 87001 23076"
                 value={formData.phone}
                 onChange={handleChange}
               />
@@ -142,7 +194,7 @@ export default function HeroSection({ selectedService }) {
                 id="service"
                 name="service"
                 className="field-control"
-                value={selectedService || formData.service}
+                value={formData.service}
                 onChange={handleChange}
               >
                 {SERVICE_OPTIONS.map((opt) => (
@@ -153,14 +205,21 @@ export default function HeroSection({ selectedService }) {
               </select>
             </div>
 
-            <button type="submit" className="btn-submit-req">
-              <span>SUBMIT REQUEST</span>
+            <button type="submit" className="btn-submit-req" disabled={submitting}>
+              <span>{submitting ? "SENDING..." : "SUBMIT REQUEST"}</span>
               <span>➤</span>
             </button>
 
-            {submitted && (
-              <p style={{ marginTop: "10px", fontSize: "0.84rem", color: "#15803d", fontWeight: 600 }}>
-                Request received. Our team will reach out shortly.
+            {statusMsg && (
+              <p
+                style={{
+                  marginTop: "10px",
+                  fontSize: "0.84rem",
+                  color: isError ? "#dc2626" : "#15803d",
+                  fontWeight: 600,
+                }}
+              >
+                {statusMsg}
               </p>
             )}
           </form>
