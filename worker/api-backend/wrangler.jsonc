@@ -20,7 +20,7 @@
 	"upload_source_maps": true,
 	"d1_databases": [
 		{
-			"binding": "webtech_leads_db",
+			"binding": "LEADS_DB",
 			"database_name": "webtech_leads_db",
 			"database_id": "26c6fa76-b1ae-40f1-a344-ef9d61e912bd"
 		}

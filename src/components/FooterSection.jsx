@@ -102,7 +102,7 @@ export default function FooterSection() {
               <li className="footer-contact-item">
                 <span className="footer-c-icon icon-mail" aria-hidden="true">✉️</span>
                 <a href="mailto:info@webtechservices.in">
-                  ajinfo@webtechservices.in
+                  ajwebtechservices@gmail.com
                 </a>
               </li>
               <li className="footer-contact-item">
